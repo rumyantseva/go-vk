@@ -20,7 +20,7 @@ type Track struct {
 	GenreID  int    `json:"genre_id,omitempty"`
 }
 
-func (s *AudioService) List(ownerID int64, count int, offset int) (*Tracks, *Response, error) {
+func (s *AudioService) Get(ownerID int64, count int, offset int) (*Tracks, *Response, error) {
 	u := "audio.get"
 
 	req, err := s.client.NewRequest("GET", u, nil)
