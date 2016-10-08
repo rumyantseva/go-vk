@@ -2,8 +2,9 @@ package vk
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"log"
+
+	"github.com/rumyantseva/go-vk/vk/error"
 )
 
 type OAuthService struct {
@@ -32,8 +33,6 @@ func (s *OAuthService) AccessToken(redirectURI string, code string) (*AccessToke
 		s.ClientID, s.ClientSecret, redirectURI, code,
 	)
 
-	fmt.Printf("%s", u)
-
 	req, err := s.Client.NewRequest("GET", u, nil)
 
 	if err != nil {
@@ -47,7 +46,7 @@ func (s *OAuthService) AccessToken(redirectURI string, code string) (*AccessToke
 	}
 
 	if aToken.Error != nil {
-		err := errors.New(*aToken.Error)
+		err := error.New(*aToken.Error, *aToken.ErrorDescription)
 		return nil, resp, err
 	}
 
